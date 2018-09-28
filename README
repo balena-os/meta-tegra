@@ -29,11 +29,11 @@ Current status
 
 * core-image-sato image builds and boots, and apps run OK.
 * core-image-weston image builds and boots, and test apps run OK.
+* cuda 10 recipes in place, sample programs run.
 
 TO-DO List
 ----------
 
-* Recipes for CUDA 10, CuDNN, etc.
 * Fix HDMI audio, which doesn't appear to be working
 
 
