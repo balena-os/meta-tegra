@@ -31,11 +31,6 @@ Current status
 * core-image-weston image builds and boots, and test apps run OK.
 * cuda 10 recipes in place, sample programs run.
 
-TO-DO List
-----------
-
-* Fix HDMI audio, which doesn't appear to be working
-
 
 Contributing
 ------------
