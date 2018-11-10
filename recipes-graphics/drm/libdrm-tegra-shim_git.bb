@@ -7,7 +7,7 @@ COMPATIBLE_MACHINE = "(tegra186|tegra194|tegra210)"
 SRC_REPO ?= "github.com/madisongh/libdrm-tegra-shim"
 SRCBRANCH ?= "master"
 SRC_URI = "git://${SRC_REPO};branch=${SRCBRANCH}"
-SRCREV ?= "82357b0aecc9614035effca9c340b291cf52293e"
+SRCREV ?= "7ef29e6b3a8a01b488b7400af839d4369dde5389"
 
 PV = "2.4+git${SRCPV}"
 
