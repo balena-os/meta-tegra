@@ -26,14 +26,6 @@ This layer depends on:
 URI: git://git.openembedded.org/openembedded-core
 branch: thud
 
-TO DO
------
-
-* The nveglglessink gstreamer plugin isn't working with wayland
-  when built from sources, even after updating the recipe to compile
-  in wayland support.
-
-
 Contributing
 ------------
 
