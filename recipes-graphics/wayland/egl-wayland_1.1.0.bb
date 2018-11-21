@@ -6,7 +6,10 @@ DEPENDS = "eglexternalplatform mesa wayland wayland-protocols wayland-native"
 
 SRC_URI = "git://github.com/NVIDIA/egl-wayland;protocol=https"
 SRCREV = "0eb29d4a84788b2abb3642ec2d3ccec0b0befe36"
-SRC_URI += "file://nvidia_wayland.json"
+SRC_URI += " \
+    file://0001-Fix-wayland-interface-checks.patch \
+    file://nvidia_wayland.json \
+"
 
 PR = "r1"
 
