@@ -26,6 +26,14 @@ This layer depends on:
 URI: git://git.openembedded.org/openembedded-core
 branch: thud
 
+NVIDIA V4L2 gstreamer plugin
+----------------------------
+
+L4T R31.1.0 adds a new nvv4l2 gstreamer plugin. This plugin is built from
+NVIDIA-provided source, and it depends libv4l2 provided by the v4l-utils
+recipe in the meta-oe layer. If you want to use this plugin, you need to
+include meta-oe in your layers or import the v4l-utils recipe from there.
+
 Contributing
 ------------
 
