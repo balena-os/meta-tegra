@@ -8,7 +8,7 @@ require conf/machine/include/arm/arch-armv8.inc
 KERNEL_IMAGETYPE = "Image"
 
 MACHINE_FEATURES = "alsa usbhost pci rtc cuda"
-MACHINE_ESSENTIAL_EXTRA_RDEPENDS = "tegra-firmware kernel-devicetree kernel-image"
+MACHINE_ESSENTIAL_EXTRA_RDEPENDS = "tegra-firmware"
 MACHINE_EXTRA_RDEPENDS = "tegra-nvpmodel tegra-nvphs tegra-configs-nvstartup tegra-configs-udev"
 
 INITRD_IMAGE ?=	"tegra186-minimal-initramfs"
@@ -33,5 +33,7 @@ CUDA_NVCC_ARCH_FLAGS ?= "--gpu-architecture=compute_72 --gpu-code=sm_72"
 
 PREFERRED_PROVIDER_libdrm = "libdrm-tegra-shim"
 PREFERRED_PROVIDER_drm = "libdrm-tegra-shim"
+PREFERRED_PROVIDER_virtual/bootloader ?= "cboot"
+PREFERRED_PROVIDER_cboot ?= "cboot-prebuilt"
 
 require conf/machine/include/tegra-common.inc
