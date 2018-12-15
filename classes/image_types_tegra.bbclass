@@ -194,7 +194,6 @@ BOOTFILES_tegra186 = "\
     bmp.blob \
     bpmp.bin \
     camera-rtcpu-sce.bin \
-    cboot.bin \
     eks.img \
     mb1_prod.bin \
     mb1_recovery_prod.bin \
@@ -217,7 +216,6 @@ BOOTFILES_tegra194 = "\
     bmp.blob \
     bpmp_t194.bin \
     camera-rtcpu-rce.bin \
-    cboot_t194.bin \
     eks.img \
     mb1_t194_prod.bin \
     nvtboot_applet_t194.bin \
@@ -328,6 +326,7 @@ create_tegraflash_pkg_tegra186() {
     ln -s "${STAGING_DATADIR}/tegraflash/${MACHINE}.cfg" .
     ln -s "${IMAGE_TEGRAFLASH_KERNEL}" ./${LNXFILE}
     ln -s "${DEPLOY_DIR_IMAGE}/${DTBFILE}" ./${DTBFILE}
+    ln -s "${DEPLOY_DIR_IMAGE}/cboot-${MACHINE}.bin" ./cboot.bin
     for f in ${BOOTFILES}; do
         ln -s "${STAGING_DATADIR}/tegraflash/$f" .
     done
@@ -364,6 +363,7 @@ create_tegraflash_pkg_tegra194() {
     cd "${WORKDIR}/tegraflash"
     ln -s "${STAGING_DATADIR}/tegraflash/${MACHINE}.cfg" .
     ln -s "${STAGING_DATADIR}/tegraflash/${MACHINE}-override.cfg" .
+    ln -s "${DEPLOY_DIR_IMAGE}/cboot-${MACHINE}.bin" ./cboot_t194.bin
     ln -s "${IMAGE_TEGRAFLASH_KERNEL}" ./${LNXFILE}
     if [ -n "${KERNEL_ARGS}" ]; then
         rm -f ./${DTBFILE}.tmp ./${DTBFILE}

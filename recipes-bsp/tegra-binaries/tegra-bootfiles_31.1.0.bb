@@ -17,7 +17,6 @@ BOOTBINS_tegra186 = "\
     bmp.blob \
     bpmp.bin \
     camera-rtcpu-sce.bin \
-    cboot.bin \
     eks.img \
     mb1_prod.bin \
     mb1_recovery_prod.bin \
@@ -33,7 +32,6 @@ BOOTBINS_tegra194 = "\
     bmp.blob \
     bpmp_t194.bin \
     camera-rtcpu-rce.bin \
-    cboot_t194.bin \
     eks.img \
     mb1_t194_prod.bin \
     nvtboot_applet_t194.bin \
@@ -92,7 +90,6 @@ do_install_append_tegra194() {
     install -m 0644 ${S}/bootloader/xusb_sil_rel_fw ${D}${datadir}/tegraflash/
     install -m 0644 ${B}/cbo.dtb ${D}${datadir}/tegraflash/
 }
-
 
 PACKAGES = "${PN}-dev"
 FILES_${PN}-dev = "${datadir}"
