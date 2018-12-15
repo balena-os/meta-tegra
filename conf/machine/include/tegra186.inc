@@ -8,12 +8,16 @@ require conf/machine/include/arm/arch-armv8.inc
 KERNEL_IMAGETYPE = "Image"
 
 MACHINE_FEATURES = "alsa bluetooth usbhost pci wifi rtc cuda"
-MACHINE_ESSENTIAL_EXTRA_RDEPENDS = "tegra-firmware kernel-devicetree kernel-image"
+MACHINE_ESSENTIAL_EXTRA_RDEPENDS = "tegra-firmware ${@'' if d.getVar('PREFERRED_PROVIDER_virtual/bootloader') == 'cboot' else 'kernel-devicetree kernel-image'}"
 MACHINE_EXTRA_RDEPENDS = "tegra-nvpmodel tegra-nvphs tegra-configs-nvstartup tegra-configs-udev"
 MACHINE_EXTRA_RRECOMMENDS += "tegra-firmware-brcm kernel-module-bcmdhd"
 
-INITRAMFS_IMAGE ?= "tegra186-minimal-initramfs"
-TEGRA_INITRAMFS_INITRD ?= "1"
+INITRAMFS_IMAGE ?= "${@'' if d.getVar('PREFERRED_PROVIDER_virtual/bootloader') == 'cboot' else 'tegra186-minimal-initramfs'}"
+TEGRA_INITRAMFS_INITRD ?= "${@'' if d.getVar('PREFERRED_PROVIDER_virtual/bootloader') == 'cboot' else '1'}"
+INITRD_IMAGE ?= "${@'tegra186-minimal-initramfs' if d.getVar('PREFERRED_PROVIDER_virtual/bootloader') == 'cboot' else ''}"
+INITRD_FSTYPES ?= "${@'cpio.gz.cboot' if d.getVar('PREFERRED_PROVIDER_virtual/bootloader') == 'cboot' else '${INITRAMFS_FSTYPES}'}"
+IMAGE_CLASSES_append = "${@' image_types_cboot' if d.getVar('PREFERRED_PROVIDER_virtual/bootloader') == 'cboot' else ''}"
+IMAGE_UBOOT ?= "${@'' if d.getVar('PREFERRED_PROVIDER_virtual/bootloader') == 'cboot' else 'u-boot'}"
 
 TEGRA_AUDIO_DEVICE ?= "tegrahda"
 
@@ -32,5 +36,6 @@ PREFERRED_PROVIDER_libdrm = "libdrm-tegra-shim"
 PREFERRED_PROVIDER_drm = "libdrm-tegra-shim"
 PREFERRED_PROVIDER_u-boot-fw-utils = "u-boot-fw-utils-tegra"
 PREFERRED_RPROVIDER_u-boot-fw-utils = "u-boot-fw-utils-tegra"
+PREFERRED_PROVIDER_cboot ?= "cboot-prebuilt"
 
 require conf/machine/include/tegra-common.inc
