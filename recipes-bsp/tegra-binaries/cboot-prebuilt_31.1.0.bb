@@ -24,6 +24,6 @@ addtask deploy before do_build after do_install
 
 python () {
     socarch = d.getVar("SOC_FAMILY") or ""
-    if socarch in ['tegra186', 'tegra194'] and d.getVar("PREFERRED_PROVIDER_virtual/bootloader") == "cboot":
+    if socarch in ['tegra186', 'tegra194'] and d.getVar("PREFERRED_PROVIDER_virtual/bootloader").startswith("cboot"):
         d.appendVar("PROVIDES", " virtual/bootloader")
 }
