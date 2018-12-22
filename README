@@ -18,7 +18,7 @@ Boards supported:
 Also appears to be working:
 * Jetson-TX2 development kit (Linux4Tegra R31.1.0, Jetpack 4.1.1 DP)
 
-May currently be broken:
+Also working, with older L4T releases:
 * Jetson-TK1 development kit (Linux4Tegra R21.7)
 * Jetson-TX1 development kit (Linux4Tegra R28.2, JetPack 3.3)
 
