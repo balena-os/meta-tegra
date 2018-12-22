@@ -16,6 +16,8 @@ IMAGE_TEGRAFLASH_FS_TYPE ??= "ext4"
 IMAGE_TEGRAFLASH_ROOTFS ?= "${IMGDEPLOYDIR}/${IMAGE_LINK_NAME}.${IMAGE_TEGRAFLASH_FS_TYPE}"
 IMAGE_TEGRAFLASH_KERNEL ?= "${DEPLOY_DIR_IMAGE}/${LNXFILE}"
 
+BL_IS_CBOOT = "${@'1' if d.getVar('PREFERRED_PROVIDER_virtual/bootloader').startswith('cboot') else '0'}"
+
 # Override this function if you need to add
 # customization after the default files are
 # copied/symlinked into the working directory
@@ -328,7 +330,7 @@ create_tegraflash_pkg_tegra186() {
     cd "${WORKDIR}/tegraflash"
     ln -s "${STAGING_DATADIR}/tegraflash/${MACHINE}.cfg" .
     ln -s "${IMAGE_TEGRAFLASH_KERNEL}" ./${LNXFILE}
-    if [ "${PREFERRED_PROVIDER_virtual/bootloader}" = "cboot" -a -n "${KERNEL_ARGS}" ]; then
+    if [ "${BL_IS_CBOOT}" = "1" -a -n "${KERNEL_ARGS}" ]; then
         cp "${DEPLOY_DIR_IMAGE}/${DTBFILE}" ./${DTBFILE}
         bootargs="`fdtget ./${DTBFILE} /chosen bootargs 2>/dev/null`"
         fdtput -t s ./${DTBFILE} /chosen bootargs "$bootargs ${KERNEL_ARGS}"
@@ -461,7 +463,7 @@ oe_make_bup_payload_common() {
         ln -s "${STAGING_DATADIR}/tegraflash/${MACHINE}-override.cfg" .
     fi
     rm -f ./${DTBFILE}
-    if [ "${PREFERRED_PROVIDER_virtual/bootloader}" = "cboot" -a -n "${KERNEL_ARGS}" ]; then
+    if [ "${BL_IS_CBOOT}" = "1" -a -n "${KERNEL_ARGS}" ]; then
         cp "${DEPLOY_DIR_IMAGE}/${DTBFILE}" ./${DTBFILE}
         bootargs="`fdtget ./${DTBFILE} /chosen bootargs 2>/dev/null`"
         fdtput -t s ./${DTBFILE} /chosen bootargs "$bootargs ${KERNEL_ARGS}"
