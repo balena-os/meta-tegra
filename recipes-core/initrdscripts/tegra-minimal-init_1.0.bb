@@ -7,7 +7,7 @@ SRC_URI = "\
     file://platform-preboot.sh \
 "
 SRC_URI_append_tegra194 = " file://platform-preboot-cboot.sh"
-SRC_URI_append_tegra186 = "${@' file://platform-preboot-cboot.sh' if d.getVar('PREFERRED_PROVIDER_virtual/bootloader') == 'cboot' else ''}"
+SRC_URI_append_tegra186 = "${@' file://platform-preboot-cboot.sh' if d.getVar('PREFERRED_PROVIDER_virtual/bootloader').startswith('cboot') else ''}"
 
 S = "${WORKDIR}"
 
@@ -27,7 +27,7 @@ do_install() {
 
 RDEPENDS_${PN} = "${VIRTUAL-RUNTIME_base-utils}"
 RDEPENDS_${PN}_append_tegra194 = " util-linux-blkid"
-RDEPENDS_${PN}_append_tegra186 = "${@' util-linux-blkid' if d.getVar('PREFERRED_PROVIDER_virtual/bootloader') == 'cboot' else ''}"
+RDEPENDS_${PN}_append_tegra186 = "${@' util-linux-blkid' if d.getVar('PREFERRED_PROVIDER_virtual/bootloader').startswith('cboot') else ''}"
 FILES_${PN} = "/"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
