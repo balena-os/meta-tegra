@@ -42,7 +42,8 @@ do_install_append() {
 do_install[depends] += "${@['', '${INITRAMFS_IMAGE}:do_image_complete'][(d.getVar('INITRAMFS_IMAGE', True) or '') != '' and (d.getVar('TEGRA_INITRAMFS_INITRD', True) or '') == "1"]}"
 
 EXTRA_KERNEL_ARGS ??= ""
-KERNEL_ARGS ?= "\${cbootargs} ${EXTRA_KERNEL_ARGS}"
+KERNEL_BASE_ARGS ?= "\${cbootargs}"
+KERNEL_ARGS ??= ""
 
 generate_extlinux_conf() {
     install -d ${D}/${KERNEL_IMAGEDEST}/extlinux
@@ -54,7 +55,7 @@ MENU TITLE Boot Options
 LABEL primary
       MENU LABEL primary ${KERNEL_IMAGETYPE}-${KERNEL_VERSION}
       LINUX /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}-${KERNEL_VERSION}
-      APPEND ${KERNEL_ARGS} ${KERNEL_ROOTSPEC}
+      APPEND ${KERNEL_BASE_ARGS} ${KERNEL_ARGS} ${KERNEL_ROOTSPEC}
 EOF
     if [ -n "${INITRAMFS_IMAGE}" -a "${TEGRA_INITRAMFS_INITRD}" = "1" ]; then
         echo "      INITRD /${KERNEL_IMAGEDEST}/initrd" >> ${D}/${KERNEL_IMAGEDEST}/extlinux/extlinux.conf
