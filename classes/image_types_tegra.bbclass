@@ -429,8 +429,6 @@ do_image_tegraflash[depends] += "zip-native:do_populate_sysroot dtc-native:do_po
                                  tegra-bootfiles:do_populate_sysroot tegra-bootfiles:do_populate_lic \
                                  ${@'${INITRD_IMAGE}:do_image_complete' if d.getVar('INITRD_IMAGE') != '' else  ''} \
                                  ${@'${IMAGE_UBOOT}:do_deploy ${IMAGE_UBOOT}:do_populate_lic' if d.getVar('IMAGE_UBOOT') != '' else  ''}"
-				 ${@'${INITRD_IMAGE}:do_image_complete' if d.getVar('INITRD_IMAGE') != '' else ''} \
-                                 ${@d.expand('${IMAGE_UBOOT}:do_deploy ${IMAGE_UBOOT}:do_populate_lic') if d.getVar('IMAGE_UBOOT') != '' else  ''}"
 IMAGE_TYPEDEP_tegraflash += "${IMAGE_TEGRAFLASH_FS_TYPE}"
 
 oe_make_bup_payload() {
