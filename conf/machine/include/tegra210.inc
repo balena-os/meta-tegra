@@ -7,10 +7,10 @@ require conf/machine/include/arm/arch-armv8a.inc
 
 KERNEL_IMAGETYPE = "Image"
 
-MACHINE_FEATURES = "alsa bluetooth usbhost pci wifi rtc cuda"
+MACHINE_FEATURES = "alsa usbhost pci rtc cuda"
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS = "tegra-firmware kernel-devicetree kernel-image u-boot"
-MACHINE_EXTRA_RDEPENDS = "tegra-nvpmodel tegra-nvphs tegra-nvs-service tegra-configs-nvstartup tegra-configs-udev"
-MACHINE_EXTRA_RRECOMMENDS = "tegra-firmware-brcm kernel-module-bcmdhd"
+MACHINE_EXTRA_RDEPENDS = "tegra-nvpmodel tegra-nvphs tegra-nvs-service tegra-configs-nvstartup tegra-configs-udev kernel-module-nvgpu kernel-module-nvs"
+KERNEL_MODULE_AUTOLOAD += "nvgpu"
 
 INITRAMFS_IMAGE ?= "tegra-minimal-initramfs"
 TEGRA_INITRAMFS_INITRD ?= "1"
@@ -21,7 +21,7 @@ SERIAL_CONSOLE = "115200 ttyS0"
 
 KERNEL_MODULE_AUTOLOAD = ""
 
-KERNEL_ARGS ?= "OS=l4t sdhci_tegra.en_boot_part_access=1"
+KERNEL_ARGS ?= "sdhci_tegra.en_boot_part_access=1"
 
 NVIDIA_CHIP = "0x21"
 
