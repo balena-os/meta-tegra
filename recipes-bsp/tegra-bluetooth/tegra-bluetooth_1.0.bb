@@ -13,8 +13,7 @@ COMPATIBLE_MACHINE = "tegra"
 
 TEGRA_BT_SUPPORT_PACKAGE ??= "tegra-brcm-patchram"
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${WORKDIR}"
 
 inherit systemd
 
@@ -24,13 +23,13 @@ do_install() {
 	install -m 0755 ${S}/tegra-bluetooth-init.sh ${D}${sbindir}/tegra-bluetooth-init
 	install -d ${D}${systemd_system_unitdir}
 	install -m 0644 ${S}/tegra-bluetooth.service ${D}${systemd_system_unitdir}/
-	install -d ${D}${nonarch_base_libdir}/udev/rules.d
-	install -m 0644 ${S}/tegra-bluetooth.rules ${D}${nonarch_base_libdir}/udev/rules.d/99-tegra-bluetooth.rules
+	install -d ${D}${base_libdir}/udev/rules.d
+	install -m 0644 ${S}/tegra-bluetooth.rules ${D}${base_libdir}/udev/rules.d/99-tegra-bluetooth.rules
     fi
 }
 
 ALLOW_EMPTY:${PN} = "1"
 SYSTEMD_SERVICE:${PN} = "${@bb.utils.contains('MACHINE_FEATURES', 'bluetooth', 'tegra-bluetooth.service', '', d)}"
-FILES:${PN} += "${nonarch_base_libdir}/udev/rules.d"
+FILES:${PN} += "${base_libdir}/udev/rules.d"
 RDEPENDS:${PN} = "${@bb.utils.contains('MACHINE_FEATURES', 'bluetooth', '${TEGRA_BT_SUPPORT_PACKAGE}', '', d)} nvidia-kernel-oot-bluetooth"
 PACKAGE_ARCH = "${MACHINE_ARCH}"

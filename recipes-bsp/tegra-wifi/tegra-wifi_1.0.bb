@@ -8,17 +8,16 @@ SRC_URI = "\
 
 COMPATIBLE_MACHINE = "tegra"
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${WORKDIR}"
 
 do_install() {
     if [ -s ${S}/tegra-wifi.rules ]; then
-	install -d ${D}${nonarch_base_libdir}/udev/rules.d
-	install -m 0644 ${S}/tegra-wifi.rules ${D}${nonarch_base_libdir}/udev/rules.d/98-tegra-wifi.rules
+	install -d ${D}${base_libdir}/udev/rules.d
+	install -m 0644 ${S}/tegra-wifi.rules ${D}${base_libdir}/udev/rules.d/98-tegra-wifi.rules
     fi
 }
 
 ALLOW_EMPTY:${PN} = "1"
-FILES:${PN} += "${nonarch_base_libdir}/udev/rules.d"
+FILES:${PN} += "${base_libdir}/udev/rules.d"
 RRECOMMENDS:${PN} += "nvidia-kernel-oot-wifi"
 PACKAGE_ARCH = "${MACHINE_ARCH}"

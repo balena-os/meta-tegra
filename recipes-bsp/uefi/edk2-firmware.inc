@@ -42,7 +42,7 @@ EDK2_ARCH:riscv64  = "RISCV64"
 EDK2_EXTRA_BUILD   = ""
 
 # build --buildtarget
-EDK2_BUILD_MODE ?= "${@bb.utils.contains('EDK2_BUILD_RELEASE', '1', 'RELEASE', 'DEBUG', d)}"
+EDK2_BUILD_MODE ?= "${@bb.utils.contains('EDK2_BUILD_RELEASE', '1', 'RELEASE', 'RELEASE', d)}"
 
 # Baremetal, no need for a C library
 DEPENDS:remove = "virtual/compilerlibs virtual/libc"
@@ -50,7 +50,7 @@ DEPENDS += "util-linux-native iasl-native"
 
 inherit deploy
 
-S = "${WORKDIR}/edk2"
+S = "${WORKDIR}/edk2-tegra"
 B = "${WORKDIR}/build"
 
 LDFLAGS[unexport] = "1"

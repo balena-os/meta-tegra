@@ -10,7 +10,9 @@ LIC_FILES_CHKSUM += "file://../edk2-nvidia-non-osi/Silicon/NVIDIA/Drivers/NvGopD
 
 inherit python3native
 
-DEPENDS += "dtc-native python3-kconfiglib-native"
+DEPENDS += "dtc-native python3-kconfiglib-native python3"
+
+PYTHON = "python3"
 
 SRC_URI_EDK2_PLATFORMS = "git://github.com/NVIDIA/edk2-platforms.git;protocol=https;branch=r36.4.3-updates"
 SRC_URI_EDK2_NVIDIA = "git://github.com/NVIDIA/edk2-nvidia.git;protocol=https;branch=r36.4.3-updates"
@@ -86,7 +88,7 @@ def nvidia_edk2_build_ids(d):
 
 # BUILD_* taken from Silicon/NVIDIA/edk2nv/stuart/settings.py and
 #                    builder.py, plus Platform/NVIDIA/Jetson/PlatformBuild.py
-EDK2_EXTRA_BUILD = '-D "BUILDID_STRING=v${PV}" -D "BUILD_DATE_TIME=${@format_build_date(d)}" -D "BUILD_PROJECT_TYPE=EDK2" ${@nvidia_edk2_build_ids(d)}'
+EDK2_EXTRA_BUILD = '-D "BUILDID_STRING=v${PV}" -D "BUILD_DATE_TIME=${@format_build_date(d)}" -D "BUILD_PROJECT_TYPE=EDK2" ${@nvidia_edk2_build_ids(d)} -D "GENFW_FLAGS=--zero"'
 
 def format_build_date(d):
     import datetime

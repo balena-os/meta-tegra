@@ -17,7 +17,7 @@ EDK2_BIN_NAME = "uefi_jetson.bin"
 SRC_URI += "file://nvbuildconfig.py"
 
 do_configure:append() {
-    ${PYTHON} ${UNPACKDIR}/nvbuildconfig.py ${S_EDK2_NVIDIA}/Platform/NVIDIA/Kconfig ${S_EDK2_NVIDIA}/Platform/NVIDIA/${EDK2_PLATFORM}/Jetson.defconfig ${B}/nvidia-config/Jetson/.config ${B}/nvidia-config/Jetson/config.dsc.inc
+    python3 ${WORKDIR}/nvbuildconfig.py ${S_EDK2_NVIDIA}/Platform/NVIDIA/Kconfig ${S_EDK2_NVIDIA}/Platform/NVIDIA/${EDK2_PLATFORM}/Jetson.defconfig ${B}/nvidia-config/Jetson/.config ${B}/nvidia-config/Jetson/config.dsc.inc
 }
 
 def fmp_lowest_version(d):
@@ -32,12 +32,12 @@ def fmp_lowest_version(d):
 do_compile:append() {
     rm -rf ${B}/images
     mkdir ${B}/images
-    ${PYTHON} ${S_EDK2_NVIDIA}/Silicon/NVIDIA/edk2nv/FormatUefiBinary.py \
+    python3 ${S_EDK2_NVIDIA}/Silicon/NVIDIA/edk2nv/FormatUefiBinary.py \
         ${B}/Build/${EDK2_PLATFORM}/${EDK2_BUILD_MODE}_${EDK_COMPILER}/FV/UEFI_NS.Fv \
         ${B}/images/${EDK2_BIN_NAME}.tmp
     mv ${B}/images/${EDK2_BIN_NAME}.tmp ${B}/images/${EDK2_BIN_NAME}
     if ${@'false' if bb.utils.to_boolean(d.getVar('TEGRA_UEFI_MINIMAL')) else 'true'}; then
-        ${PYTHON} ${S_EDK2_NVIDIA}/Silicon/NVIDIA/edk2nv/FormatUefiBinary.py \
+        python3 ${S_EDK2_NVIDIA}/Silicon/NVIDIA/edk2nv/FormatUefiBinary.py \
                   ${B}/Build/${EDK2_PLATFORM}/${EDK2_BUILD_MODE}_${EDK_COMPILER}/AARCH64/L4TLauncher.efi \
                   ${B}/images/BOOTAA64.efi
     fi

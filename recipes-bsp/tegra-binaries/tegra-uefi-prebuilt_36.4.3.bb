@@ -14,8 +14,7 @@ TEGRA_UEFI_SIGNING_CLASS ??= "tegra-uefi-signing"
 inherit deploy ${TEGRA_UEFI_SIGNING_CLASS}
 
 do_compile() {
-    cp ${S}/bootloader/uefi_jetson.bin ${S}/bootloader/BOOTAA64.efi ${B}
-    cp ${S}/bootloader/uefi_jetson_minimal.bin ${B}
+    :
 }
 
 do_compile:append:tegra234() {
@@ -36,14 +35,14 @@ addtask sign_efi_launcher after do_compile before do_install
 
 do_install() {
     install -d ${D}${EFIDIR}
-    install -m 0644 ${B}/BOOTAA64.efi ${D}${EFIDIR}/${EFI_BOOT_IMAGE}
+    ## install -m 0644 ${B}/BOOTAA64.efi ${D}${EFIDIR}/${EFI_BOOT_IMAGE}
     install -d ${D}${datadir}/edk2-nvidia
     install -m 0644 ${B}/standalone_mm_optee.bin ${D}${datadir}/edk2-nvidia/
 }
 
 do_deploy() {
     install -d ${DEPLOYDIR}
-    install -m 0644 ${B}/uefi_jetson.bin ${B}/uefi_jetson_minimal.bin ${DEPLOYDIR}/
+    ##install -m 0644 ${B}/uefi_jetson.bin ${B}/uefi_jetson_minimal.bin ${DEPLOYDIR}/
     for dtbo in ${TEGRA_BOOTCONTROL_OVERLAYS}; do
 	[ -e ${S}/kernel/dtb/$dtbo ] || continue
 	install -m 0644 ${S}/kernel/dtb/$dtbo ${DEPLOYDIR}/

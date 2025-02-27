@@ -4,7 +4,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 INHIBIT_DEFAULT_DEPS = "1"
 
-inherit_defer native
+inherit native
 
 SRC_URI = " \
     file://tegra-flash-helper.sh \
@@ -16,8 +16,7 @@ SRC_URI = " \
     file://initrd-flash.sh \
 "
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${WORKDIR}"
 
 do_install() {
     install -d ${D}${bindir}/tegra-flash

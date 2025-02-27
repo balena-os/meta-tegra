@@ -67,14 +67,7 @@ sign_extlinux_files() {
 }
 
 do_sign_files() {
-    local files_to_sign="extlinux.conf"
-    if [ -n "${UBOOT_EXTLINUX_FDT}" ]; then
-        files_to_sign="$files_to_sign ${DTBFILE}"
-    fi
-    if [ -n "${INITRAMFS_IMAGE}" -a "${INITRAMFS_IMAGE_BUNDLE}" != "1" ]; then
-        files_to_sign="$files_to_sign initrd"
-    fi
-    sign_extlinux_files $files_to_sign
+    :
 }
 do_sign_files[dirs] = "${B}"
 do_sign_files[depends] += "${TEGRA_UEFI_SIGNING_TASKDEPS}"
@@ -83,14 +76,11 @@ addtask sign_files after do_compile do_create_extlinux_config do_concat_dtb_over
 
 do_install() {
     install -d ${D}/boot/extlinux
-    install -m 0644 ${B}/${KERNEL_IMAGETYPE} ${D}/boot/
     if [ -n "${UBOOT_EXTLINUX_FDT}" ]; then
         install -m 0644 ${B}/${DTBFILE}* ${D}/boot/
     fi
-    if [ -n "${INITRAMFS_IMAGE}" -a "${INITRAMFS_IMAGE_BUNDLE}" != "1" ]; then
-        install -m 0644 ${B}/initrd* ${D}/boot/
-    fi
-    install -m 0644 ${B}/extlinux.conf* ${D}/boot/extlinux/
+    install -m 0644 ${DEPLOY_DIR_IMAGE}/extlinux/extlinux.conf ${D}/boot/extlinux/
+    touch ${DEPLOY_DIR_IMAGE}/extra_uEnv.txt
 }
 
 FILES:${PN} = "/boot"

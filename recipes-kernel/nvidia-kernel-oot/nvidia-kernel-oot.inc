@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://nvdisplay/COPYING;md5=1d5fa2a493e937d5a4b96e5e03b90f7
 
 TEGRA_UEFI_SIGNING_CLASS ??= "tegra-uefi-signing"
 
-inherit module
+inherit module deploy
 inherit ${TEGRA_UEFI_SIGNING_CLASS}
 
 COMPATIBLE_MACHINE = "(tegra)"
@@ -38,6 +38,9 @@ TEGRA_OOT_REPLACEMENT_DRIVERS = "\
     tegra-drm \
 "
 
+HOST_OBJCOPY_KERNEL_ARCH ?= "${TARGET_OBJCOPY_KERNEL_ARCH}"
+KERNEL_OBJCOPY = "${HOST_PREFIX}objcopy ${HOST_OBJCOPY_KERNEL_ARCH}"
+
 EXTRA_OEMAKE += '\
     IGNORE_PREEMPT_RT_PRESENCE=1 KERNEL_PATH="${STAGING_KERNEL_BUILDDIR}" \
     CC="${KERNEL_CC}" CXX="${KERNEL_CC} -x c++" LD="${KERNEL_LD}" AR="${KERNEL_AR}" \
@@ -61,7 +64,7 @@ do_sign_dtbs() {
 do_sign_dtbs[dirs] = "${B}"
 do_sign_dtbs[depends] += "${TEGRA_UEFI_SIGNING_TASKDEPS}"
 
-addtask sign_dtbs after do_compile before do_install
+#addtask sign_dtbs after do_compile before do_install
 
 do_install() {
     unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
@@ -379,3 +382,8 @@ python oot_update_rprovides() {
             d.setVar('RDEPENDS:' + oot_pkg, newdepstr)
 }
 PACKAGESPLITFUNCS += "oot_update_rprovides"
+
+# Fixes objcopy failure on modules in the .debug
+# directory, which caused split_kernel_module_packages()
+# to fail.
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"

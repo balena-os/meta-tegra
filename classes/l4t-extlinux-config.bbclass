@@ -124,4 +124,3 @@ UBOOT_EXTLINUX_VARS = "CONSOLE MENU_DESCRIPTION KERNEL_IMAGE FDT KERNEL_ARGS INI
 do_create_extlinux_config[vardeps] += "${@' '.join(['UBOOT_EXTLINUX_%s_%s' % (v, l) for v in d.getVar('UBOOT_EXTLINUX_VARS').split() for l in d.getVar('UBOOT_EXTLINUX_LABELS').split()])}"
 do_create_extlinux_config[vardepsexclude] += "OVERRIDES"
 
-addtask create_extlinux_config before do_install do_deploy after do_compile
